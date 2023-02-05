@@ -16,13 +16,24 @@ class ReqestAPICall(object):
     #endregion
 
     def get(self, url, **kwargs):
-        return self.session.get(self.base_url+url, **kwargs)
-
+        try:
+            return self.session.get(self.base_url+url, **kwargs)
+        except requests.exceptions.RequestException as e:
+            print(e.response.text)
     def post(self, url, **kwargs):
-        return self.session.post(self.base_url+url, **kwargs)
+        try:
+            return self.session.post(self.base_url+url, **kwargs)
+        except requests.exceptions.RequestException as e:
+            print(e.response.text)
 
     def put(self, url, **kwargs):
-        return self.session.put(self.base_url+url, **kwargs)
-
+        try:
+            return self.session.put(self.base_url+url, **kwargs)
+        except requests.exceptions.RequestException as e:
+            print(e.response.text)
     def delete(self, url, **kwargs):
-        return self.session.delete(self.base_url+url, **kwargs)
+        try:
+            return self.session.delete(self.base_url+url, **kwargs)
+        except requests.exceptions.RequestException as e:
+            print(e.response.text)
+    

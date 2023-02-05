@@ -1,10 +1,10 @@
 class ComparisonBasic(object):
-    def __init__(self, operator: str = "", value: object = None, negate: bool = False, comparison_basic_type: str = "", case_sensitive: bool = True) -> None:
+    def __init__(self, operator: str = "", value: object = None, negate: bool = False, type: str = "", caseSensitive: bool = True) -> None:
         self._operator = operator
         self._value = value
         self._negate = negate
-        self._comparison_basic_type = comparison_basic_type
-        self._case_sensitive = case_sensitive
+        self._type = type
+        self._caseSensitive = caseSensitive
         
     #region Properties
     @property
@@ -29,16 +29,16 @@ class ComparisonBasic(object):
         self._negate = value
         
     @property
-    def comparison_basic_type(self):
-        return self._comparison_basic_type
-    @comparison_basic_type.setter
-    def comparison_basic_type(self, value):
-        self._comparison_basic_type = value
+    def type(self):
+        return self._type
+    @type.setter
+    def type(self, value):
+        self._type = value
         
     @property
-    def case_sensitive(self):
-        return self._case_sensitive
-    @case_sensitive.setter
-    def case_sensitive(self, value):
-        self._case_sensitive = value
+    def caseSensitive(self):
+        return self._caseSensitive
+    @caseSensitive.setter
+    def caseSensitive(self, value):
+        self._caseSensitive = value
     #endregion

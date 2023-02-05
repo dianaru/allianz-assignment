@@ -4,9 +4,9 @@ from ConditionKey import ContitionKey
 from ComparisonBasic import ComparisonBasic
 
 class EntityRuleEngineCondition(object):
-    def __init__(self, key: ContitionKey = ContitionKey(), comparison_info: ComparisonBasic = ComparisonBasic()) -> None:
+    def __init__(self, key: ContitionKey = ContitionKey(), comparisonInfo: ComparisonBasic = ComparisonBasic()) -> None:
         self._key = key
-        self._comparison_info = comparison_info
+        self._comparisonInfo = comparisonInfo
         
     #region Properties
     @property
@@ -17,11 +17,11 @@ class EntityRuleEngineCondition(object):
         self._key = value
     
     @property
-    def comparison_info(self):
-        return self._comparison_info
-    @comparison_info.setter
-    def comparison_info(self, value):
-        self.comparison_info = value
+    def comparisonInfo(self):
+        return self._comparisonInfo
+    @comparisonInfo.setter
+    def comparisonInfo(self, value):
+        self.comparisonInfo = value
     #endregion
     
     def to_json(self):

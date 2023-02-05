@@ -1,6 +1,32 @@
 # allianz-assignment
 Repo use for allianz technical assignment. 
 
+# Introduction
+This project main job is to assist in the creation and updating the **Management Zone** area from Dynatrace.
+
+It does so by using an input file of *yml* type, transforming the data into JSON objects and transfering that into Dynatrace.
+
+# Prerequisites
+ - Python istallation
+ - Python version >= 3.9
+ - Packages: *requests*, *pyyml*
+ - Dynatrace access
+
+ *Note1: if some of the packages are missing use ```pip install <name_of_the_package>```*
+
+ *Note2: set environment variable %PYTHON_PATH% to the desired python path.*
+
+# Usage
+Script calling:
+```
+ ./main.py -i <input_yml_file> -t <dynatrace_access_token>
+```
+Options:
+ - -i input yml file
+ - -t dynatrace access token (*see [documentation](https://www.dynatrace.com/support/help/dynatrace-api/basics/dynatrace-api-authentication) on how to generate the access token for synatrace)
+
+# Architectural details
+Classes were constructed based on the [Dynatrace Management Zone documentation](https://www.dynatrace.com/support/help/dynatrace-api/configuration-api/management-zones-api). 
 
 # Task
 In Dynatrace, so-called Management Zones shall be configured via the API in a configuration-ascode approach. 
