@@ -1,8 +1,13 @@
 import argparse
 import sys, typing
 import yaml
-from dynatrace_api_call import DynatraceAPICall
-from team_class import Team
+from ReqestAPICall import ReqestAPICall
+from ManagementZone import ManagementZone
+from MzRule import MzRule
+from EntityRuleEngineCondition import EntityRuleEngineCondition
+from ConditionKey import ContitionKey
+from ComparisonBasic import ComparisonBasic
+from Team import Team
 import json
 
 def read_yml_file(input_yml_path: str)  -> dict:
@@ -38,21 +43,39 @@ def main():
     teams = get_teams(yml_dict)
     
     dynatrace_access_token = args.accessToken
-    dynatrace = DynatraceAPICall("https://svg88186.live.dynatrace.com/")
+    dynatrace = ReqestAPICall("https://svg88186.live.dynatrace.com/")
     
-    
-    data = {
-            "name": "sampleManagementZone",
-            "description": "sampleDescription"
-        }
-    data1 = json.dumps(data)
     header = {
             'Authorization': "Api-Token " + dynatrace_access_token,
             'Content-Type' : 'application/json'
         }
     
-    get = dynatrace.get("api/config/v1/managementZones", headers=header)    
-    post = dynatrace.post("api/config/v1/managementZones", headers=header, data=data1)
+    management_zones = dynatrace.get("api/config/v1/managementZones", headers=header).json()['values']
+    
+    for management_zone, team in zip(management_zones, teams): 
+        if team.name == management_zone['name']:
+            pass
+        else:
+            mz_rules = []
+            for hot_group_prefix in team.host_group_prefixes:
+                key = ContitionKey('HOST_GROUP_NAME')
+                comparison_info = ComparisonBasic('BEGINS_WITH', hot_group_prefix, False, 'STRING', True)
+                
+                #TODO: I think this is not really correct.
+                conditions = [EntityRuleEngineCondition(key, comparison_info)]
+                mz_rules.append(MzRule(conditions=conditions))
+                
+            mz = ManagementZone(team.name, mz_rules)
+            data = mz.to_json()
+            
+            #Post new management zones into Dynatrace
+            post = dynatrace.post("api/config/v1/managementZones", headers=header, data=data)
+            
+    
+
+    # data1 = json.dumps(data)
+    # post = dynatrace.post("api/config/v1/managementZones", headers=header, data=data1)
+    # delete = dynatrace.delete("api/config/v1/managementZones/" + get.json()['values'][0]['id'], headers = header)
     x=0
 
 if __name__ == "__main__":

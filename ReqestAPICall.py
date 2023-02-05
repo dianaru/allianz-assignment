@@ -1,7 +1,7 @@
 import requests
 
 
-class DynatraceAPICall(object):
+class ReqestAPICall(object):
     def __init__(self, base_url) -> None:
         self._base_url = base_url
         self.session = requests.Session()
